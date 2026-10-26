@@ -5,6 +5,7 @@ requires-python = ">=3.11,<3.14"
 dependencies = ["pandas==2.2.3", "pytest==8.3.5"]
 
 [project.optional-dependencies]
+notebook = ["ipykernel>=6,<7"]
 dashboard = ["plotly==6.9.0", "pyarrow==25.0.1"]
 
 [tool.pytest.ini_options]
