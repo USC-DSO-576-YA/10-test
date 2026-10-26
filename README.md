@@ -4,32 +4,27 @@
 
 Open `pytest_business_in_class.ipynb` in VS Code. In the terminal, run
 `uv sync --extra notebook`, then select this folder’s `.venv` as the notebook
-kernel. Run cells in order. Response cells are collapsed for now; expand
+kernel. Follow the walkthrough in order. Response cells are collapsed for now; expand
 them when needed. Worked solutions are kept in the instructor package.
 
 Session 1: guided shipping tests, then hotel refunds in [Pair Up](https://dso576.vercel.app/pair).
 Session 2: customer conversion, then tests of the wildfire dashboard.
 Discounts and retention are optional extensions.
 
-The notebook creates exercise files under `pytest_business_lab/`. Edit and save
-those `.py` files in VS Code, then rerun the notebook’s test cell. Starter cells
-preserve existing files; editing their quoted text does not update files already created.
-The guided shipping boundary test deliberately fails until you repair the function.
+The starter code and tests are supplied in [`pytest_business_lab/`](pytest_business_lab/).
+The notebook walks you through predicting results, running tests, adding a missing
+case, and repairing the function. Edit the actual `.py` files; there is no file-generation step.
 
-## Run pytest yourself
+## Run pytest
 
-pytest finds test functions and checks their `assert` statements against your code.
-You supply the expected answers; pytest reports whether the code matches them.
-
-After the notebook creates the shipping files, open a terminal in **10-test**:
+From the **10-test** terminal:
 
 ```text
 uv run python -m pytest pytest_business_lab/01_shipping -q --tb=short
 ```
 
-Run it before adding the boundary test, after adding it, and after repairing the
-function. Save your `.py` files before each run. The notebook explains the command
-and gives terminal paths for every local activity; its helper cells are optional.
+Save your files before each run. The shipping starter test passes; the boundary
+test you add should fail until you repair the function.
 
 ## Wildfire project and extra practice
 
