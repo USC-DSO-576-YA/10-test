@@ -1,0 +1,11 @@
+{
+  "source": "U.S. Drought Monitor, National Drought Mitigation Center / USDA / NOAA",
+  "documentation": "https://droughtmonitor.unl.edu/DmData/DataDownload/WebServiceInfo.aspx",
+  "url": "https://usdmdataservices.unl.edu/api/StateStatistics/GetDroughtSeverityStatisticsByAreaPercent?aoi=06&startdate=1/1/2000&enddate=12/31/2024&statisticsType=1",
+  "retrieved": "2026-10-25",
+  "state": "CA",
+  "format": "Traditional cumulative percent of area; D1 includes D2-D4",
+  "monthly_method": "Unweighted mean of weekly map values whose MapDate falls in the calendar month. Not a daily or fire-weighted mean.",
+  "join": "One row per state and month. Left join from fire months; pre-2000 drought remains missing.",
+  "raw_sha256": "f260c1c7b6764ab342f966c6a654745eb4689c781c64252535177bc86fbd1565"
+}

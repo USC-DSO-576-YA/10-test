@@ -39,6 +39,7 @@ function drawOverview(data) {
   $("selection-caption").textContent = `${$("start-year").value}–${$("end-year").value} · ${$("cause").selectedOptions[0].textContent}`;
   $("empty-overview").classList.toggle("hidden", m.fires !== 0);
   $("overview-charts").classList.toggle("hidden", m.fires === 0);
+  drawDrought(data.drought);
   if (m.fires === 0) return;
 
   line("annual-fires", data.annual, "fires", "#ce6840", "Recorded fires");
@@ -174,3 +175,21 @@ async function start() {
   } catch (error) { $("error").textContent = error.message; $("error").classList.remove("hidden"); }
 }
 start();
+
+function drawDrought(rows) {
+  const available = rows.some(r => r.drought_pct != null);
+  $("drought-message").textContent = available
+    ? "Compare monthly fire counts with drought coverage. The two axes use different units."
+    : "No drought observations for this selection. Choose California and years from 2000 onward.";
+  $("drought-chart").classList.toggle("hidden", !available);
+  if (!available) return;
+  const x = rows.map(r => r.month.slice(0, 10));
+  plot("drought-chart", [
+    {type: "bar", name: "Recorded fires", x, y: rows.map(r => r.fires), marker: {color: "#ce6840"}, opacity: .65,
+     hovertemplate: "%{x}<br>%{y:,} fires<extra></extra>"},
+    {type: "scatter", mode: "lines", name: "Area in drought (D1–D4)", x, y: rows.map(r => r.drought_pct), yaxis: "y2", connectgaps: false,
+     line: {color: "#397d68", width: 2}, hovertemplate: "%{x}<br>%{y:.1f}% of state area<extra></extra>"}
+  ], {showlegend: true, legend: {orientation: "h", y: -.3}, margin: {l: 60, r: 65, t: 20, b: 85},
+      xaxis: {type: "date"}, yaxis: {title: {text: "Recorded fires"}, rangemode: "tozero"},
+      yaxis2: {title: {text: "Area in drought (%)"}, overlaying: "y", side: "right", range: [0, 100], showgrid: false}});
+}

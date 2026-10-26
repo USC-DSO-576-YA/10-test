@@ -36,12 +36,42 @@ of this dashboard. Changing it will not change this page.
 
 ## Source
 
-Copied from the instructor's Module 7 Wildfire Atlas. The page, styles,
-JavaScript, calculations, and data are preserved; the server import and launch
-instructions were adapted to run inside this folder.
+Copied from the instructor's Module 7 Wildfire Atlas. The original fire calculations and data are preserved. The server was adapted
+to run inside this folder; the page now also includes complementary drought data.
 
 Data: USDA Forest Service FPA FOD, seventh edition, 1992–2024.
 [Dataset documentation](https://doi.org/10.2737/RDS-2013-0009.7).
 `outputs/fires_national.json` records the service, fields, and record count.
 Counts describe reported occurrences; summed final sizes are not distinct
 land burned during the selected period.
+
+## Complementary data: drought
+
+The overview compares California fire counts with drought coverage.
+Choose California and years overlapping 2000–2024. Other states show
+an unavailable-data message. The cause filter changes fires, not drought.
+
+- `outputs/drought_ca_weekly.csv` — original weekly U.S. Drought Monitor data.
+- `outputs/wildfire_drought_ca_monthly.csv` — fire counts joined to monthly drought.
+- `outputs/drought_source.json` — source URL, download date, and transformation.
+- `drought_data.py` — aggregation and join used by the page.
+
+[Source documentation](https://droughtmonitor.unl.edu/DmData/DataDownload/WebServiceInfo.aspx).
+D1 measures state area in moderate **or worse** drought; it already includes
+D2–D4. Do not add those columns. Monthly values average weekly maps dated
+within each month; they are not daily averages. Before 2000, drought is
+missing, not zero. Shared trends do not establish causation.
+
+Both CSVs are linked on the page. The joined download always contains
+California, all causes, and 1992–2024; it does not follow filters. Rebuild it:
+
+```text
+uv run --extra dashboard python -m wildfire_dashboard.build_drought_table
+```
+
+`tests/test_drought.py` checks averages, state matching, missing values, and
+joins that could multiply rows. Run it:
+
+```text
+uv run python -m pytest tests/test_drought.py -q
+```

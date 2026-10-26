@@ -14,6 +14,8 @@ from urllib.parse import parse_qs, urlsplit
 
 import plotly.offline
 
+from .drought_data import load_drought, join_monthly
+
 from .wildfire_data import (
     DATA_PATH, MONTHLY_PATH, STATE_CODES, STATE_NAMES, cause_yearly, causes,
     filter_fires, load_fires, load_notebook_monthly, metrics, seasonality,
@@ -45,6 +47,7 @@ def years_from(query, bounds):
 
 
 def make_handler(fires, monthly, plotly_js):
+    drought = load_drought()
     bounds = (int(fires["year"].min()), int(fires["year"].max()))
     causes_list = sorted(str(value) for value in fires["reported_cause"].dropna().unique())
     available_states = sorted(
@@ -101,6 +104,7 @@ def make_handler(fires, monthly, plotly_js):
                         "sizes": records(sizes(selected)),
                         "cause_yearly": records(cause_yearly(selected)),
                         "monthly": None,
+                        "drought": records(join_monthly(selected, drought, years, state)),
                     }
                     if state == "CA" and cause is None and monthly is not None:
                         subset = monthly.loc[monthly["month"].dt.year.between(*years)]
@@ -110,6 +114,8 @@ def make_handler(fires, monthly, plotly_js):
                     years = years_from(query, bounds)
                     table = state_comparison(filter_fires(fires, years))
                     self.send_json({"states": records(table)})
+                elif request.path in ("/data/drought_ca_weekly.csv", "/data/wildfire_drought_ca_monthly.csv"):
+                    self.send_bytes((ROOT / "outputs" / request.path.rsplit("/", 1)[1]).read_bytes(), "text/csv; charset=utf-8")
                 elif request.path == "/plotly.min.js":
                     self.send_bytes(plotly_js, "text/javascript; charset=utf-8")
                 else:
