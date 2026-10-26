@@ -16,6 +16,21 @@ those `.py` files in VS Code, then rerun the notebook’s test cell. Starter cel
 preserve existing files; editing their quoted text does not update files already created.
 The guided shipping boundary test deliberately fails until you repair the function.
 
+## Run pytest yourself
+
+pytest finds test functions and checks their `assert` statements against your code.
+You supply the expected answers; pytest reports whether the code matches them.
+
+After the notebook creates the shipping files, open a terminal in **10-test**:
+
+```text
+uv run python -m pytest pytest_business_lab/01_shipping -q --tb=short
+```
+
+Run it before adding the boundary test, after adding it, and after repairing the
+function. Save your `.py` files before each run. The notebook explains the command
+and gives terminal paths for every local activity; its helper cells are optional.
+
 ## Wildfire project and extra practice
 
 In the terminal:
