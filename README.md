@@ -7,8 +7,14 @@ Open `pytest_business_in_class.ipynb` in VS Code. In the terminal, run
 kernel. Run cells in order. Response cells are collapsed for now; expand
 them when needed. Worked solutions are kept in the instructor package.
 
-Session 1: shipping, refunds, promotions. Session 2: conversion, retention,
-and tests of the wildfire project.
+Session 1: guided shipping tests, then hotel refunds in [Pair Up](https://dso576.vercel.app/pair).
+Session 2: customer conversion, then tests of the wildfire dashboard.
+Discounts and retention are optional extensions.
+
+The notebook creates exercise files under `pytest_business_lab/`. Edit and save
+those `.py` files in VS Code, then rerun the notebook’s test cell. Starter cells
+preserve existing files; editing their quoted text does not update files already created.
+The guided shipping boundary test deliberately fails until you repair the function.
 
 ## Wildfire project and extra practice
 
