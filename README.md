@@ -15,6 +15,11 @@ The starter code and tests are supplied in [`pytest_business_lab/`](pytest_busin
 The notebook walks you through predicting results, running tests, adding a missing
 case, and repairing the function. Edit the actual `.py` files; there is no file-generation step.
 
+## More practice
+
+Ask Codex: **“Use tutor.md to practice Module 10.”** It gives one question at a
+time: code tracing, short answers, and pandas coding, with optional pytest follow-ups.
+
 ## Run pytest
 
 From the **10-test** terminal:
