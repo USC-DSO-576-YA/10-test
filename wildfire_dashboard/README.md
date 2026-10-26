@@ -1,16 +1,43 @@
-# Wildfire Atlas
+# Run the Wildfire Atlas
 
-The HTML dashboard from Module 7, with its Python calculations and bundled
-USDA wildfire data. Launch it from the **10-test folder**:
+This is the Module 7 HTML dashboard, with wildfire and complementary drought data.
+
+## Open it in your browser
+
+1. Open the cloned **10-test** folder in VS Code, then **Terminal → New Terminal**.
+   The terminal should be in `10-test`. If you are inside `wildfire_dashboard`,
+   run `cd ..` first.
+
+2. Start the Python server:
+
+   ```text
+   uv run --extra dashboard python -m wildfire_dashboard.html_dashboard
+   ```
+
+3. Wait for `HTML dashboard: http://127.0.0.1:8000`, then open
+   [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
+   Keep the terminal running. Press **Ctrl+C** to stop it.
+
+The first launch installs the dashboard packages. The data and page assets are
+included; no API key or data download is needed.
+
+**Do not double-click `web/index.html`.** The page requests data from the Python
+server, so opening the HTML file alone will not load the dashboard correctly.
+
+If port 8000 is already in use, run:
 
 ```text
-uv run --extra dashboard python -m wildfire_dashboard.html_dashboard
+uv run --extra dashboard python -m wildfire_dashboard.html_dashboard --port 8010
 ```
 
-Open http://127.0.0.1:8000. Leave the terminal running; Ctrl+C stops it.
-If the port is occupied, add `--port 8010` and open http://127.0.0.1:8010.
-The first launch installs Plotly and PyArrow. After installation, the app uses
-local data and assets; no API key or data download is needed.
+Then open [http://127.0.0.1:8010](http://127.0.0.1:8010).
+If the browser says it cannot connect, check that the server is still running
+and that you opened the same port shown in the terminal.
+
+## Try it
+
+Choose **California** and years within **2000–2024**. Change the filters,
+compare wildfire counts with drought coverage, and download the CSV files.
 
 ## Files
 

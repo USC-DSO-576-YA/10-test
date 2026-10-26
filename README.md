@@ -25,20 +25,30 @@ uv run python -m pytest -q
 - `tests/test_existing.py` — supplied tests.
 - `tests/test_my_checks.py` — add your in-class tests here.
 
-## See the wildfire dashboard
+## Run and view the wildfire dashboard
 
-The original **Wildfire Atlas** is in [`wildfire_dashboard/`](wildfire_dashboard/README.md). From this folder, run:
+1. Open your cloned **10-test** folder in VS Code. Choose **Terminal → New Terminal**.
+   Run the command below from `10-test`, not from `wildfire_dashboard`:
 
-```text
-uv run --extra dashboard python -m wildfire_dashboard.html_dashboard
-```
+   ```text
+   uv run --extra dashboard python -m wildfire_dashboard.html_dashboard
+   ```
 
-Open http://127.0.0.1:8000. Stop the server with Ctrl+C. The first launch installs
-the dashboard packages; its data is included. Do not double-click the HTML: the
-charts use the local Python server.
+2. Wait for `HTML dashboard: http://127.0.0.1:8000`, then open
+   [the dashboard in your browser](http://127.0.0.1:8000).
+   Keep the terminal running while you use the page.
 
-`tests/test_dashboard.py` checks two calculations in the actual dashboard backend.
-The functions in `wildfire.py` are separate, simplified class exercises.
+3. Select **California** and years within **2000–2024** to see wildfire and drought
+   together. Try the filters and download the complementary CSV files.
+
+4. Press **Ctrl+C** in the terminal when finished.
+
+The first run installs the dashboard packages. All data is included.
+**Do not double-click `index.html`**: its charts need the Python server.
+If port 8000 is busy, see the [dashboard README](wildfire_dashboard/README.md).
+
+`tests/test_dashboard.py` and `tests/test_drought.py` test the dashboard’s Python
+calculations. `wildfire.py` contains separate, simplified class exercises.
 
 ## Extra wildfire exercises
 
