@@ -1,0 +1,19 @@
+{
+  "source": "https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_FireOccurrenceCurrentEdition_01/MapServer/0/query",
+  "edition": "FPA_FOD_20260615 (7th edition)",
+  "records": 2661383,
+  "fields": [
+    "objectid",
+    "fod_id",
+    "state",
+    "fire_year",
+    "discovery_date",
+    "fire_size",
+    "fire_size_class",
+    "nwcg_general_cause"
+  ],
+  "years": [
+    1992,
+    2024
+  ]
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wildfire Atlas | Historical fire reports</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/plotly.min.js"></script>
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">✳</span><span>WILDFIRE<br><b>ATLAS</b></span></div>
+      <div class="sidebar-caption">FPA FOD · 7TH EDITION</div>
+      <nav aria-label="Dashboard views">
+        <button class="nav-button active" data-view="overview"><span>◫</span> Overview</button>
+        <button class="nav-button" data-view="comparison"><span>▥</span> Compare states</button>
+        <button class="nav-button" data-view="methods"><span>ⓘ</span> Data &amp; methods</button>
+      </nav>
+      <div class="sidebar-bottom"><span class="live-dot"></span> Historical records<br><small>1992–2024 · United States</small></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar"><span>RESEARCH DASHBOARD <span class="slash">/</span> FIRE OCCURRENCES</span><span class="topbar-right">USDA FOREST SERVICE <span class="edition">07</span></span></header>
+      <div class="content">
+        <div class="headline-row"><div><div class="eyebrow">HISTORICAL WILDFIRE DATA</div><h1>Wildfire reports <em>across the United States.</em></h1><p class="subtitle">Explore recorded fire occurrences, final reported acres, and reported causes from 1992 to 2024.</p></div><div class="date-badge">1992 <span>—</span> 2024<br><small>DATA COVERAGE</small></div></div>
+
+        <section class="filter-bar" aria-label="Dashboard filters">
+          <div class="filter-group"><label for="start-year">FROM YEAR</label><select id="start-year"></select></div>
+          <div class="filter-group"><label for="end-year">TO YEAR</label><select id="end-year"></select></div>
+          <div class="filter-divider"></div>
+          <div class="filter-group overview-filter"><label for="state">STATE</label><select id="state"></select></div>
+          <div class="filter-group overview-filter cause-filter"><label for="cause">REPORTED CAUSE</label><select id="cause"><option value="">All reported causes</option></select></div>
+          <div class="filter-group compare-filter hidden"><label for="metric">COMPARISON METRIC</label><select id="metric"><option value="fires">Recorded fires</option><option value="acres">Acres burned</option><option value="median_size">Median fire size</option></select></div>
+          <div class="filter-note">Filters update the charts<br>and summary below</div>
+        </section>
+
+        <div id="error" class="error hidden" role="alert"></div>
+        <div id="loading" class="loading hidden">Loading records…</div>
+
+        <section id="overview-view" class="view">
+          <div class="section-heading"><div><div class="eyebrow">01 / OVERVIEW</div><h2>At a glance <span id="place-name">· California</span></h2></div><p id="selection-caption">Recorded fires discovered in the selected period.</p></div>
+          <div class="stat-grid">
+            <article class="stat-card"><span class="stat-icon fire">✳</span><div class="stat-label">RECORDED FIRES</div><strong id="stat-fires">—</strong><small>Unique reported occurrences</small></article>
+            <article class="stat-card"><span class="stat-icon acreage">◈</span><div class="stat-label">ACRES BURNED</div><strong id="stat-acres">—</strong><small>Final reported fire size</small></article>
+            <article class="stat-card"><span class="stat-icon median">◍</span><div class="stat-label">MEDIAN FIRE SIZE</div><strong id="stat-median">—</strong><small>Among valid final sizes</small></article>
+            <article class="stat-card"><span class="stat-icon unknown">?</span><div class="stat-label">UNKNOWN CAUSE</div><strong id="stat-unknown">—</strong><small>Before reported cause filter</small></article>
+          </div>
+          <div id="empty-overview" class="empty hidden">No recorded fires match this selection. Try a broader year range or another reported cause.</div>
+          <div id="overview-charts">
+            <div class="section-heading chart-section"><div><div class="eyebrow">02 / TIME SERIES</div><h2>Annual activity</h2></div><p>Changes in reporting and agency coverage may affect trends.</p></div>
+            <div class="chart-grid two"><article class="panel"><div class="panel-header"><div><span class="panel-kicker">FREQUENCY</span><h3>Recorded fires by year</h3></div><span class="panel-number">01</span></div><div id="annual-fires" class="plot"></div></article><article class="panel"><div class="panel-header"><div><span class="panel-kicker">BURNED AREA</span><h3>Final reported acres by year</h3></div><span class="panel-number">02</span></div><div id="annual-acres" class="plot"></div></article></div>
+            <div class="chart-grid two"><article class="panel"><div class="panel-header"><div><span class="panel-kicker">SEASONALITY</span><h3>Discovery month</h3></div><span class="panel-number">03</span></div><div id="seasonality" class="plot"></div><p class="panel-foot">Share of selected recorded fires.</p></article><article class="panel"><div class="panel-header"><div><span class="panel-kicker">BREAKDOWN</span><h3>Reported causes</h3></div><span class="panel-number">04</span></div><div id="causes-chart" class="plot"></div></article></div>
+            <div class="chart-grid two"><article class="panel"><div class="panel-header"><div><span class="panel-kicker">DISTRIBUTION</span><h3>Fire-size classes</h3></div><span class="panel-number">05</span></div><div id="sizes-chart" class="plot"></div></article><article class="panel"><div class="panel-header"><div><span class="panel-kicker">COMPOSITION</span><h3>Reported causes over time</h3></div><span class="panel-number">06</span></div><div id="composition-chart" class="plot"></div></article></div>
+            <section id="monthly-section" class="monthly-section hidden"><div class="section-heading chart-section"><div><div class="eyebrow">03 / NOTEBOOK SERIES</div><h2>California monthly trends</h2></div><p>From the Module 7 monthly CSV.</p></div><div class="chart-grid two"><article class="panel wide"><div class="panel-header"><div><span class="panel-kicker">MONTHLY SERIES</span><h3>Recorded fires and three-month average</h3></div></div><div id="monthly-trend" class="plot"></div></article><article class="panel"><div class="panel-header"><div><span class="panel-kicker">MONTH TO MONTH</span><h3>Change in recorded fires</h3></div></div><div id="monthly-change" class="plot"></div></article><article class="panel"><div class="panel-header"><div><span class="panel-kicker">CUMULATIVE</span><h3>Running recorded fires</h3></div></div><div id="monthly-running" class="plot"></div></article></div><p class="note">The three-month average includes two earlier months. The running count begins in January 1992 and does not reset each year.</p></section>
+          </div>
+        </section>
+
+        <section id="comparison-view" class="view hidden"><div class="section-heading"><div><div class="eyebrow">01 / STATE COMPARISON</div><h2>Compare states</h2></div><p>State totals describe recorded occurrences, not individual risk.</p></div><div class="chart-grid compare-grid"><article class="panel"><div class="panel-header"><div><span class="panel-kicker">GEOGRAPHY</span><h3>Across the United States</h3></div></div><div id="map-chart" class="plot map-plot"></div></article><article class="panel"><div class="panel-header"><div><span class="panel-kicker">RANKING</span><h3>Top 12 states</h3></div></div><div id="rank-chart" class="plot map-plot"></div></article></div><article class="panel table-panel"><div class="panel-header"><div><span class="panel-kicker">ALL STATES + DC</span><h3>Comparison table</h3></div><span id="table-count" class="table-count"></span></div><div class="table-scroll"><table><thead><tr><th>STATE</th><th>RECORDED FIRES</th><th>ACRES BURNED</th><th>MEDIAN SIZE (AC)</th><th>UNKNOWN CAUSE</th></tr></thead><tbody id="states-table"></tbody></table></div></article></section>
+
+        <section id="methods-view" class="view hidden"><div class="section-heading"><div><div class="eyebrow">01 / DOCUMENTATION</div><h2>Data &amp; methods</h2></div><p>Read the measures behind the charts.</p></div><div class="methods-grid"><article class="method-card"><span>01 / SOURCE</span><h3>USDA Forest Service FPA FOD</h3><p>Karen C. Short, <i>Spatial wildfire occurrence data for the United States, 1992–2024 [FPA_FOD_20260615]</i>, seventh edition. <a href="https://doi.org/10.2737/RDS-2013-0009.7" target="_blank" rel="noopener">Dataset and documentation ↗</a></p></article><article class="method-card"><span>02 / COVERAGE</span><h3>Recorded occurrences</h3><p>Each row represents one recorded fire occurrence identified by a unique FOD_ID. The local national table contains <strong id="record-count">—</strong> records spanning 1992–2024. The source screened redundant reports.</p></article><article class="method-card"><span>03 / MEASURES</span><h3>Counts and burned area</h3><p>Recorded fires count unique FOD_ID values. Acres burned sum valid final FIRE_SIZE values for fires discovered in the period. Missing sizes are excluded. Median fire size uses valid final sizes.</p></article><article class="method-card"><span>04 / CAUSE</span><h3>Reported, not attributed</h3><p>Unknown cause includes missing, blank, and “Missing data/not specified/undetermined” source values. Its percentage divides unknown records by all records in the selected state and years, before the cause filter.</p></article><article class="method-card"><span>05 / TIME + STATE</span><h3>Discovery date</h3><p>Annual trends use discovery year; seasonality uses discovery month. The map and table include the 50 states and DC. Territories and other state codes are excluded from state comparisons.</p></article><article class="method-card"><span>06 / LIMITATIONS</span><h3>How to interpret the results</h3><p>Reports from multiple agencies are not a guaranteed census of every U.S. wildfire. Reporting changes may affect trends. Reported cause is observational. Acres are final sizes, not distinct land burned during each discovery period.</p></article></div></section>
+        <footer>USDA FOREST SERVICE FPA FOD, SEVENTH EDITION <span>HISTORICAL RECORDED OCCURRENCES · NO FORECASTS</span></footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
