@@ -20,6 +20,17 @@ case, and repairing the function. Edit the actual `.py` files; there is no file-
 Ask Codex: **“Use tutor.md to practice Module 10.”** It gives one question at a
 time: code tracing, short answers, and pandas coding, with optional pytest follow-ups.
 
+## Activity folders
+
+| Notebook activity | Files |
+| --- | --- |
+| 1. Shipping | `pytest_business_lab/01_shipping/` |
+| 2. Break My Code | Download your pair’s files from Pair Up |
+| 3. Customer conversion | `pytest_business_lab/03_conversion/` |
+| 4. Wildfire and drought | `wildfire_dashboard/`; tests in `tests/test_dashboard.py` and `tests/test_drought.py` |
+| Extension A. Discounts | `pytest_business_lab/extension_a_discounts/` |
+| Extension B. Retention | `pytest_business_lab/extension_b_retention/` |
+
 ## Run pytest
 
 From the **10-test** terminal:
