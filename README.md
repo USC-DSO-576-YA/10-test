@@ -95,3 +95,12 @@ uv run python -m pytest tests/test_my_checks.py -q
 
 Keep the course exercises local; do not push to the shared course repo.
 For homework, work in your team project's repository on your own branch.
+
+## Decorator examples
+
+`tests/test_wildfire_parametrize.py` shows how `@pytest.mark.parametrize` runs one
+test with several inputs. Comments explain the cases and expected results.
+
+```text
+uv run python -m pytest tests/test_wildfire_parametrize.py -v --tb=short
+```
